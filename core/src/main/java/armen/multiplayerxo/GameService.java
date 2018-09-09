@@ -5,7 +5,9 @@ import armen.multiplayerxo.forms.XOForm;
 
 public interface GameService {
 
-     void initOrReset();
+     void init();
+
+     void reset();
 
      GameForm startGame(String name);
 
@@ -14,7 +16,7 @@ public interface GameService {
 
      GameForm checkGame(String sessionId, String id);
 
-     void addId(String id);
+     int checkGame(GameForm gameForm);
 
      int checkId(String id);
 

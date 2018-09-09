@@ -57,6 +57,13 @@ public class GameController {
         return gameService.checkGame(sessionId,id);
     }
 
+    @PostMapping("reset")
+    public GameForm reset (@RequestHeader String id,@RequestHeader String sessionId) {
+
+        gameService.reset();
+        return gameService.checkGame(sessionId,id);
+    }
+
 
 //    @PostMapping("setValue")
 //    public SudokuForm[][] getQuestion(@RequestHeader int x, @RequestHeader int y, @RequestHeader int value) {
@@ -64,15 +71,15 @@ public class GameController {
 //    }
 //
 //    @PostMapping("reset")
-//    public SudokuForm[][] initOrReset(@RequestHeader int mode) {
-//        gameService.initOrReset();
+//    public SudokuForm[][] init(@RequestHeader int mode) {
+//        gameService.init();
 //        gameService.generate();
 //        return gameService.getPlayableMatrix(mode);
 //    }
 //
 //    @GetMapping("end")
 //    public SudokuForm[][] end() {
-//        gameService.initOrReset();
+//        gameService.init();
 //        SudokuForm sudokuForm = new SudokuForm(0,false,true);
 //        SudokuForm[][]  array = new SudokuForm[][] {{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm},{sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm,sudokuForm}};
 //        return array;

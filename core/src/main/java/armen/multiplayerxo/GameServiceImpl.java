@@ -20,7 +20,7 @@ public class GameServiceImpl implements GameService {
     private int sessionLength = 4;
 
     @Override
-    public void initOrReset() {
+    public void init() {
 
         XOForm xo = new XOForm(0, 0);
         for (int i = 0; i < 3; i++) {
@@ -33,8 +33,19 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public void reset() {
+
+        XOForm xo = new XOForm(0, 0);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                xos[i][j] = xo;
+            }
+        }
+        game.setGame(xos);
+    }
+    @Override
     public GameForm startGame(String name) {
-        initOrReset();
+        init();
         game.setNameForFirst(name);
         game.setIdForFirst(generateId());
         game.setSessionId(generateSession());
@@ -63,7 +74,51 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void addId(String id) {
+    public int checkGame(GameForm gameForm) {
+        XOForm[][] xo =  gameForm.getGame();
+        if(xo[0][0].getSide()==1&&xo[0][1].getSide()==1&&xo[0][2].getSide()==1)
+            return 1;
+        if(xo[1][0].getSide()==1&&xo[1][1].getSide()==1&&xo[1][2].getSide()==1)
+            return 1;
+        if(xo[2][0].getSide()==1&&xo[2][1].getSide()==1&&xo[2][2].getSide()==1)
+            return 1;
+        if(xo[0][0].getSide()==1&&xo[1][0].getSide()==1&&xo[2][0].getSide()==1)
+            return 1;
+        if(xo[0][1].getSide()==1&&xo[1][1].getSide()==1&&xo[2][1].getSide()==1)
+            return 1;
+        if(xo[0][2].getSide()==1&&xo[1][2].getSide()==1&&xo[2][2].getSide()==1)
+            return 1;
+
+
+        if(xo[0][2].getSide()==2&&xo[1][1].getSide()==2&&xo[2][0].getSide()==2)
+            return 2;
+        if(xo[0][0].getSide()==2&&xo[1][1].getSide()==2&&xo[2][2].getSide()==2)
+            return 2;
+        if(xo[0][0].getSide()==2&&xo[0][1].getSide()==2&&xo[0][2].getSide()==2)
+            return 2;
+        if(xo[1][0].getSide()==2&&xo[1][1].getSide()==2&&xo[1][2].getSide()==2)
+            return 2;
+        if(xo[2][0].getSide()==2&&xo[2][1].getSide()==2&&xo[2][2].getSide()==2)
+            return 2;
+        if(xo[0][0].getSide()==2&&xo[1][0].getSide()==2&&xo[2][0].getSide()==2)
+            return 2;
+        if(xo[0][1].getSide()==2&&xo[1][1].getSide()==2&&xo[2][1].getSide()==2)
+            return 2;
+        if(xo[0][2].getSide()==2&&xo[1][2].getSide()==2&&xo[2][2].getSide()==2)
+            return 2;
+        if(xo[0][2].getSide()==2&&xo[1][1].getSide()==2&&xo[2][0].getSide()==2)
+            return 2;
+        if(xo[0][0].getSide()==2&&xo[1][1].getSide()==2&&xo[2][2].getSide()==2)
+            return 2;
+
+        for(int i=0;i<3;i++){
+
+            for(int j=0;j<3;j++){
+                if(xo[i][j].getValue()!=1)
+                    return 0;
+            }
+        }
+        return 3;
 
     }
 
@@ -113,6 +168,7 @@ public class GameServiceImpl implements GameService {
                 set[y][x] = new XOForm(1, 1);
                 game.setGame(set);
                 game.setSide(2);
+                game.setGameEnded(checkGame(game));
             }
             return game;
         }if(checkId(id)==2 && game.getSide()==2) {
@@ -121,6 +177,7 @@ public class GameServiceImpl implements GameService {
                 set[y][x] = new XOForm(1, 2);
                 game.setGame(set);
                 game.setSide(1);
+                game.setGameEnded(checkGame(game));
             }
             return game;
         }

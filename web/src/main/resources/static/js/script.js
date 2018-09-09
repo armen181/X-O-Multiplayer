@@ -23,16 +23,43 @@ $(document).ready(function () {
             }
         }
             $.ajax(settings).done(function (response) {
-            console.log(response);
-            sideTemp=response.side;
-            update(response);
+            if(response!=null) {
+                console.log(response);
+                sideTemp = response.side;
+                update(response);
+                checkGameEnded(response);
+            }
 
         });
 
 
     });
 
+    $("#playAgain").click(function () {
 
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "reset",
+            "method": "POST",
+            "headers": {
+                "sessionId": sessionId,
+                "id": gameId
+            }
+        }
+        $.ajax(settings).done(function (response) {
+
+            if(response!=null){
+                $('#exampleModal').modal('hide');
+                console.log(response);
+                update(response);
+                sideTemp=response.side;
+                checkGameEnded(response);
+
+            }
+        });
+
+    });
 
     $("#start1").click(function () {
         $('#inputFormForStart').modal({
@@ -41,7 +68,6 @@ $(document).ready(function () {
         }, 'show');
 
     });
-
 
     $("#start2").click(function () {
         $('#inputFormForJoin').modal({
@@ -114,6 +140,7 @@ $(document).ready(function () {
                         console.log(response);
                         update(response);
                         sideTemp=response.side;
+                        checkGameEnded(response);
 
                     }
                 });
@@ -136,4 +163,22 @@ function update(response) {
 
         }
     }
+}
+function checkGameEnded(response) {
+
+    if(response.gameEnded>0){
+        if(response.gameEnded==1)
+        $('#endText').text("Խաղը հաղթեց " + response.nameForFirst);
+        if(response.gameEnded==2)
+            $('#endText').text("Խաղը հաղթեց " + response.nameForSecond);
+        if(response.gameEnded==3)
+            $('#endText').text("Խաղաղ Ելք");
+        $('#exampleModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        }, 'show');
+        side=0;
+    }
+
+
 }
