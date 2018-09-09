@@ -12,7 +12,7 @@ public interface GameService {
      GameForm joinGame(String sessionId, String name);
 
 
-     GameForm checkGame(String sessionId);
+     GameForm checkGame(String sessionId, String id);
 
      void addId(String id);
 

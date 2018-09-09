@@ -14,9 +14,9 @@ public class GameForm {
     private String nameForFirst;
     private String nameForSecond;
     private int side;
-    private boolean gameEnded;
+    private int gameEnded;
 
-    public GameForm(XOForm[][] game, String idForFirst, String idForSecond, String sessionId, String nameForFirst, String nameForSecond, int side, boolean gameEnded) {
+    public GameForm(XOForm[][] game, String idForFirst, String idForSecond, String sessionId, String nameForFirst, String nameForSecond, int side, int gameEnded) {
         this.game = game;
         this.idForFirst = idForFirst;
         this.idForSecond = idForSecond;
@@ -40,7 +40,7 @@ public class GameForm {
         System.out.println("Side 2 ID = " + idForSecond);
         System.out.println("Session ID = " + sessionId);
         System.out.println("Who will Set =  " + (side==1?"Side 1": side==2?"Side 2":"Game note started"));
-        System.out.println("Games status = " + (gameEnded?"Game Ended":"Game not Ended"));
+        System.out.println("Games status = " + (gameEnded!=0?"Game Ended": "Game not Ended"));
 
 
 

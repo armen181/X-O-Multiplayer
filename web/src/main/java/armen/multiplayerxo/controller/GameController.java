@@ -3,6 +3,7 @@ package armen.multiplayerxo.controller;
 
 
 import armen.multiplayerxo.GameService;
+import armen.multiplayerxo.forms.GameForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +35,28 @@ public class GameController {
 
     // === RQ ===
     @PostMapping("startGame")
-    public String getQuestion(@RequestHeader int mode) {
-        return "hello";
+    public GameForm startGame(@RequestHeader String name) {
+
+        return gameService.startGame(name);
     }
+
+    @PostMapping("joinGame")
+    public GameForm joinGame(@RequestHeader String sessionId,@RequestHeader String name) {
+
+        return gameService.joinGame(sessionId,name);
+    }
+
+    @PostMapping("set")
+    public GameForm set(@RequestHeader String id, @RequestHeader String sessionId,@RequestHeader int y,@RequestHeader int x) {
+
+        return gameService.setValue(id,sessionId,x,y);
+    }
+    @PostMapping("get")
+    public GameForm get(@RequestHeader String id,@RequestHeader String sessionId) {
+
+        return gameService.checkGame(sessionId,id);
+    }
+
 
 //    @PostMapping("setValue")
 //    public SudokuForm[][] getQuestion(@RequestHeader int x, @RequestHeader int y, @RequestHeader int value) {

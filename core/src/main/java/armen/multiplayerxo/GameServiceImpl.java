@@ -13,13 +13,11 @@ public class GameServiceImpl implements GameService {
 
     private GameForm game;
     private XOForm[][] xos = new XOForm[3][3];
-    private String idForFirst = "";
-    private String idForSecond = "";
-    private String sessionId = "";
     private String nameForFirst = "";
     private String nameForSecond = "";
     Random random = new Random();
     private int idLength = 15;
+    private int sessionLength = 4;
 
     @Override
     public void initOrReset() {
@@ -30,7 +28,7 @@ public class GameServiceImpl implements GameService {
                 xos[i][j] = xo;
             }
         }
-        game = new GameForm(xos, "", "", "", "", "", 0, false);
+        game = new GameForm(xos, "", "", "", "", "", 0, 0);
 
     }
 
@@ -40,6 +38,7 @@ public class GameServiceImpl implements GameService {
         game.setNameForFirst(name);
         game.setIdForFirst(generateId());
         game.setSessionId(generateSession());
+        //game.setSide(1);
         return game;
     }
 
@@ -57,9 +56,10 @@ public class GameServiceImpl implements GameService {
 
 
     @Override
-    public GameForm checkGame(String sessionId) {
-
+    public GameForm checkGame(String sessionId,String id) {
+    if(checkId(id)>0&&checkSessionId(sessionId))
         return game;
+    return null;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class GameServiceImpl implements GameService {
     public String generateSession() {
 
         String sessionForReturn = "";
-        for (int i = 0; i < idLength; i++) {
+        for (int i = 0; i < sessionLength; i++) {
             char letter = (char) (random.nextInt(10) + 48);
             sessionForReturn += String.valueOf(letter);
         }
@@ -106,13 +106,25 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameForm setValue(String id, String sessionId, int x, int y) {
-        if(checkId(id)==1 || checkId(id)==2) {
-            XOForm[][] set = game.getGame();
-            set[y][x] = new XOForm(1, checkId(id));
-            game.setGame(set);
+        if(checkId(id)==1 && game.getSide()==1) {
+            if(game.getGame()[y][x].getValue()!=1) {
+
+                XOForm[][] set = game.getGame();
+                set[y][x] = new XOForm(1, 1);
+                game.setGame(set);
+                game.setSide(2);
+            }
+            return game;
+        }if(checkId(id)==2 && game.getSide()==2) {
+            if(game.getGame()[y][x].getValue()!=1) {
+                XOForm[][] set = game.getGame();
+                set[y][x] = new XOForm(1, 2);
+                game.setGame(set);
+                game.setSide(1);
+            }
             return game;
         }
-        checkId(id);
+
         return null;
     }
 }
