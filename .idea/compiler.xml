@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="console" />
         <module name="core" />
+        <module name="web" />
       </profile>
     </annotationProcessing>
   </component>

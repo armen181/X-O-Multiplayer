@@ -2,7 +2,6 @@ package armen.multiplayerxo.forms;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
@@ -10,15 +9,16 @@ public class XOForm {
 
     private int value;
     private int side;
-    private String id;
-    private String gameSession;
-    private String name;
 
-    public XOForm(int value, int side, String id, String gameSession, String name) {
+
+    public XOForm(int value, int side) {
         this.value = value;
         this.side = side;
-        this.id = id;
-        this.gameSession = gameSession;
-        this.name = name;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Value = " + value + " Side = " + side ;
     }
 }

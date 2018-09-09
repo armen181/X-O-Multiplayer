@@ -1,24 +1,30 @@
 package armen.multiplayerxo;
 
+import armen.multiplayerxo.forms.GameForm;
 import armen.multiplayerxo.forms.XOForm;
 
 public interface GameService {
 
      void initOrReset();
 
-     String startGame(int mode);
+     GameForm startGame(String name);
 
-     boolean checkGame(int[][] array);
+     GameForm joinGame(String sessionId, String name);
+
+
+     GameForm checkGame(String sessionId);
 
      void addId(String id);
 
      int checkId(String id);
 
+     boolean checkSessionId(String id);
+
      String generateId();
 
      String generateSession();
 
-     XOForm[][] setValue(String id, int x, int y);
+     GameForm setValue(String id, String sessionId, int x, int y);
 
 
 
